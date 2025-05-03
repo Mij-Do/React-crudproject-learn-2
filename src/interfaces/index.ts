@@ -10,3 +10,10 @@ export interface Iproduct {
     };
     colors: string[];
 }
+
+export interface IFormList {
+    id: string;
+    name: string;
+    label: string;
+    type: string
+}
