@@ -12,7 +12,7 @@ const ProductsCard = ({product}: IProps) => {
     return (
         <>
             <div className="flex flex-col justify-between max-w-sm mx-auto md:max-w-lg border border-gray-200 rounded-md p-2">
-                <Image imageUrl={imageURL}
+                <Image imageURL={imageURL}
                         className="rounded-md w-50 h-50 object-center mx-auto"
                         alt={category.name}
                 />
@@ -27,7 +27,7 @@ const ProductsCard = ({product}: IProps) => {
 
                 <div className="flex items-center justify-between">
                     <span>${price}</span>
-                    <Image imageUrl={imageURL}
+                    <Image imageURL={imageURL}
                         className="rounded-full w-10 h-10 object-contain"
                         alt={category.name}
                     />
