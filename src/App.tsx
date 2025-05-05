@@ -5,6 +5,8 @@ import Modal from "./components/ui/Modal"
 import { formInputList, productsList } from "./data"
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Iproduct } from "./interfaces";
+import { productValidation } from "./validation";
+import ErrorMsg from "./components/ErrorMsg";
 
 
 
@@ -23,8 +25,14 @@ function App() {
     colors: [],
   }
   // states
-  const [product, setProduct] = useState<Iproduct>(defaultProduct)
-  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState <Iproduct> (defaultProduct);
+  const [isOpen, setIsOpen] = useState (false);
+  const [errors, setErrors] = useState ({
+    title: '',
+    price: '',
+    description: '',
+    imageURL: '',
+  });
 
   // handellers
   function open() {
@@ -41,11 +49,28 @@ function App() {
       ...product,
       [name]: value,
     });
+    setErrors ({
+      ...errors,
+      [name]: '',
+    });
   }
 
   const onSubmitHandeler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(product)
+    const {title, description, imageURL, price} = product;
+    const errors = productValidation({
+      title,
+      description,
+      imageURL,
+      price,
+    });
+    const hasErrorMsg = Object.values(errors).some(value => value === '') && Object.values(errors).every(value => value === '');
+    console.log(hasErrorMsg)
+    if (!hasErrorMsg) {
+      setErrors(errors);
+      return;
+    }
+    console.log("Send it to the server!");
   }
 
   const onCancel = () => {
@@ -59,6 +84,7 @@ function App() {
     <div className="flex flex-col" key={input.id}>
       <label htmlFor={input.id} className="text-indigo-500 my-2">{input.label}</label>
       <Input className="p-2 my-2 border-2 border-indigo-200 rounded-md outline-indigo-500" value={product[input.name]} onChange={onChangeHandeler} name={input.name} type={input.type} id={input.id}/>
+      <ErrorMsg msg={errors[input.name]}/>
     </div>
   )
 
