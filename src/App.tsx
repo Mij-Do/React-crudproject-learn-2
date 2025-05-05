@@ -2,11 +2,12 @@ import ProductsCard from "./components/ProductsCard"
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import Modal from "./components/ui/Modal"
-import { formInputList, productsList } from "./data"
+import { colors, formInputList, productsList } from "./data"
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Iproduct } from "./interfaces";
 import { productValidation } from "./validation";
 import ErrorMsg from "./components/ErrorMsg";
+import CircleColors from "./components/CircleColors";
 
 
 
@@ -86,7 +87,9 @@ function App() {
       <Input className="p-2 my-2 border-2 border-indigo-200 rounded-md outline-indigo-500" value={product[input.name]} onChange={onChangeHandeler} name={input.name} type={input.type} id={input.id}/>
       <ErrorMsg msg={errors[input.name]}/>
     </div>
-  )
+  );
+
+  const renderCircleColors = colors.map(colors => <CircleColors key={colors} colors={colors}/>)
 
   return (
     <main className="container mx-auto">
@@ -95,6 +98,9 @@ function App() {
         <Modal isOpen={isOpen} onClose={close} title="Add New Product"> 
           <form className="space-y-3" onSubmit={onSubmitHandeler}>
             {renderInputs}
+            <div className="flex flex-wrap space-x-2 my-5">
+              {renderCircleColors}
+            </div>
             <div className="flex space-x-2">
               <Button className="bg-indigo-500 hover:bg-indigo-400 text-white"> Submit </Button>
               <Button className="bg-gray-400 hover:bg-gray-300 text-white" onClick={onCancel}> Cancel </Button>
