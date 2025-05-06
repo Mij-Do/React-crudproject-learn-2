@@ -12,17 +12,20 @@
  */
 
 
+
 export const productValidation = (product: {
     title: string;
     price: string;
     description: string;
     imageURL: string;
+    colors: string[];
 }) => {
     const errors = {
         title: '',
         price: '',
         description: '',
         imageURL: '',
+        colors: '',
     }
 
     const validateURL = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
@@ -38,6 +41,9 @@ export const productValidation = (product: {
     }
     if (!product.price.trim() || isNaN(Number(product.price))) {
         errors.price = 'Price is Not Valid!';
+    }
+    if (product.colors.length === 0) {
+        errors.colors = 'You should choose a Color, Please!';
     }
     return errors;
 }

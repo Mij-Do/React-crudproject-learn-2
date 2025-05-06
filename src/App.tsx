@@ -38,6 +38,7 @@ function App() {
     price: '',
     description: '',
     imageURL: '',
+    colors: '',
   });
 
   // handellers
@@ -63,12 +64,13 @@ function App() {
 
   const onSubmitHandeler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const {title, description, imageURL, price} = product;
+    const {title, description, imageURL, price, colors} = product;
     const errors = productValidation({
       title,
       description,
       imageURL,
       price,
+      colors,
     });
     const hasErrorMsg = Object.values(errors).some(value => value === '') && Object.values(errors).every(value => value === '');
     console.log(hasErrorMsg)
@@ -115,6 +117,7 @@ function App() {
         <Modal isOpen={isOpen} onClose={close} title="Add New Product"> 
           <form className="space-y-3" onSubmit={onSubmitHandeler}>
             {renderInputs}
+            <Select selected={selectedCategory} setSelected={setSelectedCategory}/>
             <div className="flex flex-wrap space-x-2 my-5">
               {tempColor.map(color => 
                 <span key={color} 
@@ -122,7 +125,7 @@ function App() {
                 className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
               )}
             </div>
-            <Select selected={selectedCategory} setSelected={setSelectedCategory}/>
+            {tempColor.length === 0 ? <ErrorMsg msg={errors.colors}/> : null}
             <div className="flex flex-wrap space-x-2 my-5">
               {renderCircleColors}
             </div>
