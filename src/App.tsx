@@ -2,7 +2,7 @@ import ProductsCard from "./components/ProductsCard"
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import Modal from "./components/ui/Modal"
-import { colors, formInputList, productsList } from "./data"
+import { categories, colors, formInputList, productsList } from "./data"
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Iproduct } from "./interfaces";
 import { productValidation } from "./validation";
@@ -32,6 +32,7 @@ function App() {
   const [products, setProducts] = useState <Iproduct[]> (productsList);
   const [isOpen, setIsOpen] = useState (false);
   const [tempColor, setTempColor] = useState<string[]> ([]);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [errors, setErrors] = useState ({
     title: '',
     price: '',
@@ -75,7 +76,7 @@ function App() {
       setErrors(errors);
       return;
     }
-    setProducts(prev => [{...product, id: uuid (), colors: tempColor}, ...prev]);
+    setProducts(prev => [{...product, id: uuid (), colors: tempColor, category: selectedCategory}, ...prev]);
     setProduct(defaultProduct);
     setTempColor([]);
     close();
@@ -121,7 +122,7 @@ function App() {
                 className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
               )}
             </div>
-            <Select />
+            <Select selected={selectedCategory} setSelected={setSelectedCategory}/>
             <div className="flex flex-wrap space-x-2 my-5">
               {renderCircleColors}
             </div>
