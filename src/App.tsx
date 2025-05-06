@@ -8,6 +8,7 @@ import { Iproduct } from "./interfaces";
 import { productValidation } from "./validation";
 import ErrorMsg from "./components/ErrorMsg";
 import CircleColors from "./components/CircleColors";
+import { uuid } from "./utils/functions";
 
 
 
@@ -27,6 +28,7 @@ function App() {
   }
   // states
   const [product, setProduct] = useState <Iproduct> (defaultProduct);
+  const [products, setProducts] = useState <Iproduct[]> (productsList);
   const [isOpen, setIsOpen] = useState (false);
   const [tempColor, setTempColor] = useState<string[]> ([]);
   const [errors, setErrors] = useState ({
@@ -72,7 +74,10 @@ function App() {
       setErrors(errors);
       return;
     }
-    console.log("Send it to the server!");
+    setProducts(prev => [{...product, id: uuid (), colors: tempColor}, ...prev]);
+    setProduct(defaultProduct);
+    setTempColor([]);
+    close();
   }
 
   const onCancel = () => {
@@ -81,7 +86,7 @@ function App() {
   }
 
   // renders
-  const renderProducts = productsList.map(product => <ProductsCard key={product.id} product={product}/>)
+  const renderProducts = products.map(product => <ProductsCard key={product.id} product={product}/>)
   const renderInputs = formInputList.map (input => 
     <div className="flex flex-col" key={input.id}>
       <label htmlFor={input.id} className="text-indigo-500 my-2">{input.label}</label>
