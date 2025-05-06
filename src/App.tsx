@@ -28,6 +28,7 @@ function App() {
   // states
   const [product, setProduct] = useState <Iproduct> (defaultProduct);
   const [isOpen, setIsOpen] = useState (false);
+  const [tempColor, setTempColor] = useState<string[]> ([]);
   const [errors, setErrors] = useState ({
     title: '',
     price: '',
@@ -89,7 +90,16 @@ function App() {
     </div>
   );
 
-  const renderCircleColors = colors.map(colors => <CircleColors key={colors} colors={colors}/>)
+  const renderCircleColors = colors.map(colors => 
+    <CircleColors key={colors} 
+    colors={colors} 
+    onClick={() => {
+      if (tempColor.includes(colors)) {
+        setTempColor(prev => prev.filter(item => item !== colors));
+        return;
+      }
+      setTempColor((prev) => [...prev, colors])
+    }}/>)
 
   return (
     <main className="container mx-auto">
@@ -98,6 +108,13 @@ function App() {
         <Modal isOpen={isOpen} onClose={close} title="Add New Product"> 
           <form className="space-y-3" onSubmit={onSubmitHandeler}>
             {renderInputs}
+            <div className="flex flex-wrap space-x-2 my-5">
+              {tempColor.map(color => 
+                <span key={color} 
+                style={{backgroundColor: color}} 
+                className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
+              )}
+            </div>
             <div className="flex flex-wrap space-x-2 my-5">
               {renderCircleColors}
             </div>

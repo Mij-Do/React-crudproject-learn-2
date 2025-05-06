@@ -1,9 +1,11 @@
-interface IProps {
+import { HTMLAttributes } from "react";
+
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
     colors: string;
 }
 
-const CircleColors = ({ colors }: IProps) => {
-    return <span className="w-5 h-5 rounded-full cursor-pointer" style={{backgroundColor: colors}} />
+const CircleColors = ({ colors, ...rest }: IProps) => {
+    return <span className="w-5 h-5 rounded-full cursor-pointer" style={{backgroundColor: colors}} {...rest} />
 }
 
 export default CircleColors;
