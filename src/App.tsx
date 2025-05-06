@@ -9,6 +9,7 @@ import { productValidation } from "./validation";
 import ErrorMsg from "./components/ErrorMsg";
 import CircleColors from "./components/CircleColors";
 import { uuid } from "./utils/functions";
+import Select from "./components/ui/Select";
 
 
 
@@ -120,6 +121,7 @@ function App() {
                 className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
               )}
             </div>
+            <Select />
             <div className="flex flex-wrap space-x-2 my-5">
               {renderCircleColors}
             </div>
