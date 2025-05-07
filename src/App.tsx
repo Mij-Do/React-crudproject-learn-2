@@ -31,6 +31,7 @@ function App() {
   // states
   const [product, setProduct] = useState <Iproduct> (defaultProduct);
   const [productToEdit, setProductToEdit] = useState <Iproduct> (defaultProduct);
+  const [productToEditIdx, setProductToEditIdx] = useState <number> (0);
   const [products, setProducts] = useState <Iproduct[]> (productsList);
   const [isOpen, setIsOpen] = useState (false);
   const [isOpenEdit, setIsOpenEdit] = useState (false);
@@ -95,12 +96,13 @@ function App() {
       price,
       colors,
     });
-    const hasErrorMsg = Object.values(errors).some(value => value === '') && Object.values(errors).every(value => value === '');
-    console.log(hasErrorMsg)
+    const hasErrorMsg = Object.values(errors).some(value => value === '') ;
+    
     if (!hasErrorMsg) {
       setErrors(errors);
       return;
     }
+    
     setProducts(prev => [{...product, id: uuid (), colors: tempColor, category: selectedCategory}, ...prev]);
     setProduct(defaultProduct);
     setTempColor([]);
@@ -123,10 +125,15 @@ function App() {
       setErrors(errors);
       return;
     }
-    setProducts(prev => [{...product, id: uuid (), colors: tempColor, category: selectedCategory}, ...prev]);
+    
+    // for updating product
+    const updatedProduct = [...products];
+    updatedProduct[productToEditIdx] = productToEdit;
+    setProducts(updatedProduct);
+
     setProductToEdit(defaultProduct);
     setTempColor([]);
-    close();
+    closeEditModal();
   }
   const onCancel = () => {
     setProduct(defaultProduct);
@@ -134,7 +141,7 @@ function App() {
   }
 
   // renders
-  const renderProducts = products.map(product => <ProductsCard openEditModal={openEditModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
+  const renderProducts = products.map(product => <ProductsCard idx={productToEditIdx} setProductToEditIdx={setProductToEditIdx} openEditModal={openEditModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
   const renderInputs = formInputList.map (input => 
     <div className="flex flex-col" key={input.id}>
       <label htmlFor={input.id} className="text-indigo-500 my-2">{input.label}</label>
@@ -151,7 +158,7 @@ function App() {
         setTempColor(prev => prev.filter(item => item !== colors));
         return;
       }
-      setTempColor((prev) => [...prev, colors])
+      setTempColor((prev) => [...prev, colors]);
     }}/>);
     
     const renderProductToEditWithMsg = (id: string, label: string, name: TProductName) => {
@@ -170,6 +177,8 @@ function App() {
     <main className="container mx-auto">
       <div className="text-center">
         <Button className="bg-indigo-500 py-2 my-2" onClick={open}>Add New Product</Button>
+
+
         {/* {add new product} */}
         <Modal isOpen={isOpen} onClose={close} title="Add New Product"> 
           <form className="space-y-3" onSubmit={onSubmitHandeler}>
@@ -192,6 +201,8 @@ function App() {
             </div>
           </form>
         </Modal>
+
+
         {/* edit product */}
         <Modal isOpen={isOpenEdit} onClose={closeEditModal} title="Edit Product"> 
           <form className="space-y-3" onSubmit={onSubmitEditHandeler}>
