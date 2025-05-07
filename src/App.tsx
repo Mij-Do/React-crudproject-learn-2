@@ -217,8 +217,7 @@ function App() {
             {renderProductToEditWithMsg('imageURL', 'Product ImageURL', 'imageURL')}
             {renderProductToEditWithMsg('price', 'Product Price', 'price')}
 
-            {/* <Select selected={selectedCategory} s
-etSelected={setSelectedCategory}/> */}
+            <Select selected={productToEdit.category} setSelected={value => setProductToEdit({...productToEdit, category: value})}/>
 
             <div className="flex flex-wrap space-x-2 my-5">
               {tempColor.concat(productToEdit.colors).map(color => 
