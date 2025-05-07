@@ -26,6 +26,10 @@ const ProductsCard = ({product, setProductToEdit, openEditModal, openConfirmModa
         openEditModal();
         setProductToEditIdx(idx);
     }
+    const onRemove = () => {
+        setProductToEdit(product);
+        openConfirmModal();
+    }
     return (
         <>
             <div className="flex flex-col justify-between max-w-sm mx-auto md:max-w-lg border border-gray-200 rounded-md p-2">
@@ -49,7 +53,7 @@ const ProductsCard = ({product, setProductToEdit, openEditModal, openConfirmModa
                 </div>
                 <div className="mt-5 flex space-x-2">
                     <Button className="bg-indigo-600" width="w-full" onClick={onEdit}>EDIT</Button>
-                    <Button className="bg-red-600" width="w-full" onClick={() => openConfirmModal()}>DELETE</Button>
+                    <Button className="bg-red-600" width="w-full" onClick={onRemove}>DELETE</Button>
                 </div>
             </div>
         </>

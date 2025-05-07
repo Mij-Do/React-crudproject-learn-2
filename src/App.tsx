@@ -137,6 +137,8 @@ function App() {
   }
 
   const onRemoveHandler = () => {
+    const filtered = products.filter(product => product.id !== productToEdit.id);
+    setProducts(filtered);
     closeConfirmModal();
   } 
 
