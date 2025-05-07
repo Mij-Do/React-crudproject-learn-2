@@ -6,15 +6,22 @@ import Button from "./ui/Button";
 
 interface IProps {
     product: Iproduct;
+    setProductToEdit: (product: Iproduct) => void;
+    openEditModal: () => void;
 }
 
-const ProductsCard = ({product}: IProps) => {
+const ProductsCard = ({product, setProductToEdit, openEditModal}: IProps) => {
     const {title, imageURL, price, description, colors,category} = product;
 
     const renderCircleColors = colors.map(colors => 
         <CircleColors 
             key={colors} 
             colors={colors} />);
+    // handellers
+    const onEdit = () => {
+        setProductToEdit(product);
+        openEditModal();
+    }
     return (
         <>
             <div className="flex flex-col justify-between max-w-sm mx-auto md:max-w-lg border border-gray-200 rounded-md p-2">
@@ -37,7 +44,7 @@ const ProductsCard = ({product}: IProps) => {
                     />
                 </div>
                 <div className="mt-5 flex space-x-2">
-                    <Button className="bg-indigo-600" width="w-full" onClick={() => {console.log('Clicked!')}}>EDIT</Button>
+                    <Button className="bg-indigo-600" width="w-full" onClick={onEdit}>EDIT</Button>
                     <Button className="bg-red-600" width="w-full">DELETE</Button>
                 </div>
             </div>
