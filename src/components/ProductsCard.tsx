@@ -10,9 +10,10 @@ interface IProps {
     openEditModal: () => void;
     idx: number;
     setProductToEditIdx: (value: number) => void;
+    openConfirmModal: () => void;
 }
 
-const ProductsCard = ({product, setProductToEdit, openEditModal, idx, setProductToEditIdx}: IProps) => {
+const ProductsCard = ({product, setProductToEdit, openEditModal, openConfirmModal, idx, setProductToEditIdx}: IProps) => {
     const {title, imageURL, price, description, colors,category} = product;
 
     const renderCircleColors = colors.map(colors => 
@@ -48,7 +49,7 @@ const ProductsCard = ({product, setProductToEdit, openEditModal, idx, setProduct
                 </div>
                 <div className="mt-5 flex space-x-2">
                     <Button className="bg-indigo-600" width="w-full" onClick={onEdit}>EDIT</Button>
-                    <Button className="bg-red-600" width="w-full">DELETE</Button>
+                    <Button className="bg-red-600" width="w-full" onClick={() => openConfirmModal()}>DELETE</Button>
                 </div>
             </div>
         </>

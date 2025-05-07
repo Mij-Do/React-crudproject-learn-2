@@ -35,6 +35,7 @@ function App() {
   const [products, setProducts] = useState <Iproduct[]> (productsList);
   const [isOpen, setIsOpen] = useState (false);
   const [isOpenEdit, setIsOpenEdit] = useState (false);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState (false);
   const [tempColor, setTempColor] = useState<string[]> ([]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [errors, setErrors] = useState ({
@@ -46,21 +47,16 @@ function App() {
   });
 
   // handellers
-  function open() {
-    setIsOpen(true)
-}
 
-  function close() {
-    setIsOpen(false)
-  }
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
 
-  function openEditModal() {
-    setIsOpenEdit(true)
-}
+  const openEditModal = () => setIsOpenEdit(true);
+  const closeEditModal = () => setIsOpenEdit(false);
 
-  function closeEditModal() {
-    setIsOpenEdit(false)
-  }
+  const openConfirmModal = () => setIsOpenConfirmModal(true);
+  const closeConfirmModal = () => setIsOpenConfirmModal(false);
+
 
   const onChangeHandeler = (event: ChangeEvent<HTMLInputElement>) => {
     const {value, name} = event.target;
@@ -140,8 +136,12 @@ function App() {
     close();
   }
 
+  const onRemoveHandler = () => {
+    closeConfirmModal();
+  } 
+
   // renders
-  const renderProducts = products.map(product => <ProductsCard idx={productToEditIdx} setProductToEditIdx={setProductToEditIdx} openEditModal={openEditModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
+  const renderProducts = products.map(product => <ProductsCard idx={productToEditIdx} setProductToEditIdx={setProductToEditIdx} openEditModal={openEditModal} openConfirmModal={openConfirmModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
   const renderInputs = formInputList.map (input => 
     <div className="flex flex-col" key={input.id}>
       <label htmlFor={input.id} className="text-indigo-500 my-2">{input.label}</label>
@@ -235,6 +235,19 @@ function App() {
               <Button className="bg-gray-400 hover:bg-gray-300 text-white" onClick={onCancel}> Cancel </Button>
             </div>
           </form>
+        </Modal>
+
+        {/* confirm modal */}
+        {/* edit product */}
+        <Modal 
+          isOpen={isOpenConfirmModal} 
+          onClose={closeConfirmModal} 
+          title="Are You sure that you want remove this product ?"
+        > 
+            <div className="flex space-x-2">
+              <Button className="bg-red-500 hover:bg-red-400 text-white" onClick={onRemoveHandler}> Yes, Remove </Button>
+              <Button className="bg-gray-300 hover:bg-gray-400 text-white" onClick={closeConfirmModal}> Cancel </Button>
+            </div>
         </Modal>
       </div>
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-2 grid-cols-1 ">
