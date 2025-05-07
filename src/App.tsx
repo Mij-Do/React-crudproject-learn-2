@@ -11,6 +11,7 @@ import CircleColors from "./components/CircleColors";
 import { uuid } from "./utils/functions";
 import Select from "./components/ui/Select";
 import { TProductName } from "./types";
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -103,6 +104,7 @@ function App() {
     setProduct(defaultProduct);
     setTempColor([]);
     close();
+    toast.success('Product have been Added!');
   }
 
   const onSubmitEditHandeler = (event: FormEvent<HTMLFormElement>): void => {
@@ -130,6 +132,7 @@ function App() {
     setProductToEdit(defaultProduct);
     setTempColor([]);
     closeEditModal();
+    toast.success('Product have been Updated!');
   }
   const onCancel = () => {
     setProduct(defaultProduct);
@@ -140,6 +143,7 @@ function App() {
     const filtered = products.filter(product => product.id !== productToEdit.id);
     setProducts(filtered);
     closeConfirmModal();
+    toast.success('Product have been deleted!');
   } 
 
   // renders
@@ -181,6 +185,13 @@ function App() {
 
   return (
     <main className="container mx-auto">
+    <div><Toaster toastOptions={{
+      style: {
+        border: 'none',
+        backgroundColor: 'black',
+        color: 'white',
+      },
+    }}/></div>
       <div className="text-center">
         <Button className="bg-indigo-500 py-2 my-2" onClick={open}>Add New Product</Button>
 
