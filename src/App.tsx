@@ -128,7 +128,7 @@ function App() {
     
     // for updating product
     const updatedProduct = [...products];
-    updatedProduct[productToEditIdx] = productToEdit;
+    updatedProduct[productToEditIdx] = {...productToEdit, colors: tempColor.concat(productToEdit.colors)};
     setProducts(updatedProduct);
 
     setProductToEdit(defaultProduct);
@@ -155,6 +155,10 @@ function App() {
     colors={colors} 
     onClick={() => {
       if (tempColor.includes(colors)) {
+        setTempColor(prev => prev.filter(item => item !== colors));
+        return;
+      }
+      if (productToEdit.colors.includes(colors)) {
         setTempColor(prev => prev.filter(item => item !== colors));
         return;
       }
@@ -188,7 +192,9 @@ function App() {
               {tempColor.map(color => 
                 <span key={color} 
                 style={{backgroundColor: color}} 
-                className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
+                className="rounded-md text-white p-1 text-sm mb-1"
+                
+                >{color}</span>
               )}
             </div>
             {tempColor.length === 0 ? <ErrorMsg msg={errors.colors}/> : null}
@@ -210,10 +216,12 @@ function App() {
             {renderProductToEditWithMsg('description', 'Product Description', 'description')}
             {renderProductToEditWithMsg('imageURL', 'Product ImageURL', 'imageURL')}
             {renderProductToEditWithMsg('price', 'Product Price', 'price')}
-            {/*
-            <Select selected={selectedCategory} setSelected={setSelectedCategory}/>
+
+            {/* <Select selected={selectedCategory} s
+etSelected={setSelectedCategory}/> */}
+
             <div className="flex flex-wrap space-x-2 my-5">
-              {tempColor.map(color => 
+              {tempColor.concat(productToEdit.colors).map(color => 
                 <span key={color} 
                 style={{backgroundColor: color}} 
                 className="rounded-md text-white p-1 text-sm mb-1">{color}</span>
@@ -222,7 +230,7 @@ function App() {
             {tempColor.length === 0 ? <ErrorMsg msg={errors.colors}/> : null}
             <div className="flex flex-wrap space-x-2 my-5">
               {renderCircleColors}
-            </div> */}
+            </div> 
             <div className="flex space-x-2">
               <Button className="bg-indigo-500 hover:bg-indigo-400 text-white"> Submit </Button>
               <Button className="bg-gray-400 hover:bg-gray-300 text-white" onClick={onCancel}> Cancel </Button>
