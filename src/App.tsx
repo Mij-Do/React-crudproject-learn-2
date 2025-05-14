@@ -147,7 +147,7 @@ function App() {
   } 
 
   // renders
-  const renderProducts = products.map(product => <ProductsCard idx={productToEditIdx} setProductToEditIdx={setProductToEditIdx} openEditModal={openEditModal} openConfirmModal={openConfirmModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
+  const renderProducts = products.map((product, idx) => <ProductsCard idx={idx} setProductToEditIdx={setProductToEditIdx} openEditModal={openEditModal} openConfirmModal={openConfirmModal} key={product.id} product={product} setProductToEdit={setProductToEdit}/>)
   const renderInputs = formInputList.map (input => 
     <div className="flex flex-col" key={input.id}>
       <label htmlFor={input.id} className="text-indigo-500 my-2">{input.label}</label>
