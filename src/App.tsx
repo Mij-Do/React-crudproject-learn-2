@@ -157,7 +157,7 @@ function App() {
   );
 
   const renderCircleColors = colors.map(colors => 
-    <CircleColors key={colors} 
+    <CircleColors key={colors}
     colors={colors} 
     onClick={() => {
       if (tempColor.includes(colors)) {

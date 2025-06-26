@@ -46,7 +46,7 @@ const ProductsCard = ({product, setProductToEdit, openEditModal, openConfirmModa
 
                 <div className="flex items-center justify-between">
                     <span>${price}</span>
-                    <Image imageURL={imageURL}
+                    <Image imageURL={category.imageURL}
                         className="rounded-full w-10 h-10 object-contain"
                         alt={category.name}
                     />

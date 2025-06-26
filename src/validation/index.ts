@@ -28,7 +28,7 @@ export const productValidation = (product: {
         colors: '',
     }
 
-    const validateURL = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+    const validateURL = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(product.imageURL);
 
     if (!product.title.trim() || product.title.length < 10 || product.title.length > 80) {
         errors.title = 'The Product Title characters should be more than 10 && less than 80!';
